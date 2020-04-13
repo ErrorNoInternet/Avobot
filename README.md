@@ -1,6 +1,6 @@
 # Avobot
 
-What is Avobot? Avobot is a simple chatbot that can chat with you when you're bored. It is made in Python, and has the ability to check the weather, check the time, the date, and much more. 
+Avobot is a simple chatbot that can chat with you when you're bored. It is made in Python, and has the ability to check the weather, check the time, the date, and much more. 
 
 ### Features
 
@@ -9,6 +9,19 @@ What is Avobot? Avobot is a simple chatbot that can chat with you when you're bo
 - Basic chatting
 - Information database
 - Editable ``responses.data`` file
+
+### Upcoming Features
+
+- Search results
+- LAN messaging
+- Calculator
+- Web data retrieving
+- Timers and stopwatches
+- Memory (names & birthdays)
+- Reminders and alarms
+- Text-to-speech input and output
+- Emotions / Feelings
+
 
 # How to setup
 
