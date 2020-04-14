@@ -12,6 +12,7 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - Random number generator
 - Random word generator
 - Memory (name only)
+- Emotions (a few responses will change)
 
 ### Upcoming Features
 
@@ -23,7 +24,6 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - Memory (names & birthdays)
 - Reminders and alarms
 - Text-to-speech input and output
-- Emotions / Feelings
 
 # Requirements 
 
