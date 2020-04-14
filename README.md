@@ -9,6 +9,9 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - Basic chatting
 - Information database
 - Editable ``responses.data`` file
+- Random number generator
+- Random word generator
+- Memory (name only)
 
 ### Upcoming Features
 
@@ -29,7 +32,7 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 
 # How to setup
 
-This chatbot requires no Python modules to be installed. All the modules that it uses are already in Python. All you need to do is run the ``Avobot.py`` file (make sure that the ``responses.data`` is also in the same folder) and chat with your bot!
+This chatbot requires no Python modules to be installed. All the modules that it uses are already in Python. All you need to do is run the ``Avobot.py`` file (make sure that ``responses.data`` is also in the same folder) and chat with your bot!
 
 # How the chatbot works
 
