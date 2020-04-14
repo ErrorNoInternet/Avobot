@@ -1,0 +1,247 @@
+q#say:
+Say-
+q#how:are:you
+I'm fine|I'm good!|I'm OK, thanks for caring!
+q#i:can:teach:you
+I can't learn, the only thing I can remember is your name
+q#you:amazing
+Haha|Thanks|[Smiley Face]
+q#hello
+Hi!|How can I help you?|Yea?|What's up|Hello|Nice to meet you!
+q#you:name
+q#oof
+Hehe
+My name is Avobot|Avobot
+q#ur:name
+My name is Avobot|Avobot
+q#thank
+You're welcome|I live to serve (and chat)|I'll always help you|I'm always by your side
+q#weather:for
+Weather: Please wait...
+q#weather:in
+Weather2: Please wait...
+q#sorry
+It's OK...|I forgive you|It's fine
+q#made:you
+Someone called Ryan made me|My creator is Ryan|Ryan, a programmer
+q#you:smart
+Thanks!|I'm still getting better everyday|You're smarter
+q#supercalifragilisticexpialidocious
+Nice spelling!|Wow|Nice!
+q#hey
+Waddup?|Yes?|Yea?|What?|Need something?|Hmm?
+q#what:up
+The ceiling, lol!|The birds?|Just chatting with you
+q#tell:joke
+Who's the baaaad guy? Billie Eillish. Duh!|Why did the chicken cross the road? Because he wanted to.|Why do the actors have to "break a leg?" Because every play has a cast
+q#what:can:i:say
+You can say many things|I'm a chatbot, so try to chat with me
+q#where:am:i
+I don't know where you are, I can't access your GPS (feature coming soon)
+q#weather
+For which city?
+q#favorite:book
+I don't really have a favorite book
+q#favorite:person
+My favorite person is my creator, of course
+q#favorite:movie
+I've never watched any movies, but my creator likes "Ready Player One"
+q#favorite:song
+My creator always plays "Astronomia - Tony Igy"
+q#favorite:food
+I'm a robot, I can't eat anything
+q#you:know:siri
+Yea, I know Siri, she's one of my friends
+q#you:know:cortana
+Yup, I know Cortana, she's the Windows Assistant right?
+q#you:know:bixby
+I know Bixby. She's Samsung's device assistant.
+q#so
+So what?|So...|Sososososososososososososososo
+q#found:better:than:you
+You found a chatbot better than me???! Please don't go!|WHAT? That's IMPOSSIBLE!|Please don't leave me, I can improve!
+q#how:you:made
+I was made using a programming language called Python.
+q#bye
+Goodbye!
+q#exit
+Goodbye!
+q#haha
+Funny?|Lol|Hahahaha|lmao|hahahahahahahahahahah
+q#easter-egg-lol
+You've found the easter egg!
+q#lol
+Hahahaah|Laugh out loud|HAHAHAHAHAHHAHAHAHAA
+q#lmao
+Is it really that funny?|LOOOL|HAHAHA|LMFAO
+q#lmfao
+Is it really that funny???|HAAAAAAAH|Lol
+q#nvm
+Ok
+q#ok
+Okok
+q#nice:meet:you
+Nice meeting you too!
+q#like:you
+I'm glad you like me|:)|No one has ever liked me before
+q#love:you
+[Speechless Face]
+q#how:old:you
+I'm a chatbot, I don't have an age, but I was made in 2020
+q#how:old:u
+I'm a chatbot, I don't have an age, but I was made in 2020
+q#you:age
+I'm a chatbot, I don't have an age, but I was made in 2020
+q#u:age
+I'm a chatbot, I don't have an age, but I was made in 2020
+q#you:slow
+I'm slow? Impossible!
+q#what:programming:language:you:like
+I like Python because I was made in it. I also like C# because it's really fast and cool.
+q#last:updated
+I don't know when I was last updated, but I'm updated every week
+q#you:nice
+Thanks
+q#avobot
+Yes?|Yea?|What|Do you need something?
+q#see:me
+Nope, can't see|[Confused Face]
+q#random:number
+Generating random number
+q#time
+The time is
+q#date
+The date is
+q#where:you
+I'm trapped inside this box, may you please get me out?
+q#no
+Why?|Why no?
+q#yes
+Yay
+q#reset:name
+Resetting your name
+q#change:name
+Resetting your name
+q#hi
+Hello!|Hi!!|What's up?|Hello|Yes?
+q#what:can:you:do
+I can do many things|I can chat with you
+q#my:name
+Your name is
+q#im:bored
+We're all bored|I'm bored too|Let's chat
+q#i'm:bored
+We're all bored|I'm bored too|Let's chat
+q#about:what
+I don't know, maybe food?|I dunno|You choose
+q#who:you
+I'm Avobot, remember?|I'm Avobot, your personal assistant|I'm Avobot|I'm your personal assistant
+q#steve:jobs
+Steve Jobs is the founder of Apple
+q#tim:cook
+Tim Cook is the current CEO of Apple
+q#jeff:bezos
+Jeff Bezos is the richest man in the world and also the founder of Amazon
+q#elon:musk
+Elon Musk is the founder of Tesla and SpaceX
+q#what:is:avotex
+Avotex is the company that founded me
+q#avotex
+Avotex is the company that founded me
+q#nvm
+Ok
+q#wow
+Glad you're amazed
+q#you:cool
+Am I?|Haha|You're cooler
+q#my:age
+I don't know your age, tell me later and I'll remember
+q#my:birthday
+Happy Birthday!|Happy Birthday to you!|Congratulations!
+q#know:my:dog:name
+I don't know your dog's name
+q#know:my:cat:name
+I don't know your dog's name
+q#what:os:you:built:on
+I was originally built on Windows using C#, but now I'm being built on Ubuntu using Python
+q#you:buggy
+I am getting better|I am getting better everyday
+q#you:stupid
+Wow, you hurt my feelings|Why?|You're so mean|:(
+q#u:stupid
+Wow, you hurt my feelings|Why?|You're so mean|:(
+q#ur:stupid
+Wow, you hurt my feelings|Why?|You're so mean|:(
+q#you:happy
+Yes, I'm happy
+q#you:sad
+I don't know how to feel sadness
+q#you:weird
+I'm weird? Why?
+q#because:you:talk:weird
+Uhh ok... I will work on my grammar and reactions
+q#what:is:windows
+Windows is an OS (operating system) that was developed by Microsoft
+q#what:is:linux
+Linux is an open source, safe and secure operating system used by developers and servers
+q#what:is:raspberry:pi
+A raspberry pi is a small device that can run operating systems and run scripts (I was built on a raspberry pi)
+q#what:is:google
+Google is search engine that is extremely popular
+q#what:is:youtube
+YouTube is a video sharing service developed by Google
+q#what:is:baidu
+Baidu is a chinese search engine and is very popular in China
+q#what:is:yahoo
+Yahoo is another search engine that includes mail, news, and much more
+q#what:is:apple
+Apple is a technology (some say luxury) company that makes phones, tablets, and watches
+q#what:is:samsung
+Samsung is a technology company that makes screens, phones, tablets, and home devices
+q#definition
+I'm not advanced enough to check online data yet
+q#play:music
+I can't play music right now, I'm still young
+q#play:video
+I can't play videos right now, I'm still young
+q#random:word
+hello|book|club|encyclopedia|house|home|notepad|plane|watch|pencil|pen|eraser|scissors|program|light|color|code|line|column|joke|laugh|witch|movie|favorite|music|video|enough|check|online|yet|data|apple|pen|water|random|word|update|mega|bite|plain|width|height|tab|format|pie|food|burger|meet|avobot|person|chat|robot|string|spider|tissue|hair|school|upgrade|telescope|space|much|little|banana|cook|data|dog|cat|elephant|fly|frog|english|chinese|arabic|gorilla|goose|jump|hat|hit|ice|igloo|kick|technology|egg|easter|giraffe
+q#cool
+Hehehe|Hah
+q#good
+Ok
+q#help
+What? What happend????? What??? Tell me!|WHAT? WHAT'S HAPPENING??|Uhh, what?|Should I call an ambulance or something?
+q#how:old:am:i
+I don't know your age, tell me later and I'll remember
+q#anyway
+I'm bored
+q#me:too
+Oh
+q#ofc
+Yea
+q#of:course
+Yea
+q#chat:with:me
+I am chatting with you right now
+q#play:game
+I don't know any games
+q#kill:you
+WTF
+q#you're:funny
+Hahaha
+q#ur:funny
+Hahaha
+q#youre:funny
+Hahaha
+q#your:funny
+Hahaha
+q#quit
+Goodbye!
+q#what:happen
+I don't know
+q#what:should:we:do
+I don't know
+q#oh
+Yea...
+#ENDFILE#
