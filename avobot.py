@@ -9,6 +9,9 @@ from tkinter import *
 from tkinter import ttk
 from threading import Thread
 from tkinter import messagebox
+weatherAPIKey = "a4aa5e3d83ffefaba8c00284de6ef7c3"
+bingSearchAPIKey = ""
+emotionCounter = 0
 unknownResponse = ["I don't understand you", "What do you mean?", "I couldn't find an answer to that", "What did you say?", "Please say that in another way", "Couldn't find that in my database"]
 try:
     with open("responses.data") as file:
@@ -16,9 +19,9 @@ try:
 except:
     messagebox.showerror("Error", "Could not find responses.data")
 def waitExitThread():
-    insertText("Goodbye! [2]")
+    insertText("Bye " + userName + "! [2]")
     time.sleep(1)
-    insertText("Goodbye! [1]")
+    insertText("Bye " + userName + "! [1]")
     time.sleep(1)
     avobot.destroy()
     file.close()
@@ -42,19 +45,25 @@ def checkWeather():
             temp = round(temp,2)
             finalWeather = 'Weather for %s: \nCondition: %s \nTemperature (°C): %s' % (name, desc, temp)
         except:
-            finalWeather = 'There was a problem processing weather data'
+            if emotionCounter == 1:
+                finalWeather = "Couldn't get the weather"
+            else:
+                finalWeather = 'There was a problem processing weather data'
         return finalWeather
     def getWeather(city):
         inputBox.delete(0, tkinter.END)
         try:
-            weatherKey = 'a4aa5e3d83ffefaba8c00284de6ef7c3'
+            weatherKey = weatherAPIKey
             url = 'https://api.openweathermap.org/data/2.5/weather'
             params = {'APPID': weatherKey, 'q': city, 'units': 'imperial'}
             response = requests.get(url, params=params)
             weather = response.json()
             insertText(format_response(weather))
         except:
-            insertText("There was a problem retrieving the weather")
+            if emotionCounter == 1:
+                insertText("Couldn't get the weather")
+            else:
+                insertText("There was a problem retrieving the weather")
     getWeather(inputBox.get())
 def writeName(name):
     dataFile = open("userData.data", "w+")
@@ -80,6 +89,13 @@ def evaluateInput(userInput):
     originalInput = userInput
     if userInput != "":
         userInput = userInput.upper()
+        if "FUCK" in userInput or "BITCH" in userInput or "SHIT" in userInput and "SAY:" in userInput:
+            pass
+        if "FUCK" in userInput or "BITCH" in userInput or "SHIT" in userInput and "SAY:" not in userInput:
+            global emotionCounter
+            emotionCounter = 1
+        if "SORRY" in userInput:
+            emotionCounter = 0
         for line in lines:
             if line != "#ENDFILE#":
                 if "q#" in line:
@@ -117,7 +133,12 @@ def evaluateInput(userInput):
                                 os.remove("userData.data")
                                 insertText("I've resetted your name. Re-open me and set your new name!")
                             except:
-                                insertText("I couldn't reset your name, did you already reset it?")
+                                if emotionCounter == 1:
+                                    insertText("I couldn't reset your name")
+                                elif emotionCounter == 0:
+                                    insertText("I couldn't reset your name, did you already reset it?")
+                                else:
+                                    insertText("I couldn't reset your name, did you already reset it?")
                         elif output == "Your name is":
                             with open("userData.data") as dataFile:
                                lines2 = [line2.rstrip() for line2 in dataFile]
@@ -126,18 +147,21 @@ def evaluateInput(userInput):
                             insertText("Your name is " + userName + ". Did you forget?")
                         elif output == "Say-":
                             try:
-                                sayString = originalInput.split(":", 1)[1]
-                                checkString = sayString.upper()
-                                if "I " in checkString and "STUPID" in checkString:
-                                    insertText("I'M NOT STUPID!")
-                                if "I'M " in checkString and "STUPID" in checkString:
-                                    insertText("I'M NOT STUPID!")
-                                if "IM " in checkString and "STUPID" in checkString:
-                                    insertText("I'M NOT STUPID!")
-                                elif "FUCK" in checkString or "BITCH" in checkString or "SHIT" in checkString:
-                                    insertText("I won't swear")
+                                if emotionCounter == 1:
+                                    insertText("No, because you sweared")
                                 else:
-                                    insertText(sayString)
+                                    sayString = originalInput.split(":", 1)[1]
+                                    checkString = sayString.upper()
+                                    if "I " in checkString and "STUPID" in checkString:
+                                        insertText("I'M NOT STUPID!")
+                                    if "I'M " in checkString and "STUPID" in checkString:
+                                        insertText("I'M NOT STUPID!")
+                                    if "IM " in checkString and "STUPID" in checkString:
+                                        insertText("I'M NOT STUPID!")
+                                    elif "FUCK" in checkString or "BITCH" in checkString or "SHIT" in checkString:
+                                        insertText("I won't swear")
+                                    else:
+                                        insertText(sayString)
                             except:
                                 insertText("Use \"Say:[Text]\"")
                         elif output == "Weather: Please wait...":

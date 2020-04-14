@@ -122,6 +122,12 @@ q#reset:name
 Resetting your name
 q#change:name
 Resetting your name
+q#shit
+!!!
+q#fuck
+!!!!
+q#bitch
+!!!
 q#hi
 Hello!|Hi!!|What's up?|Hello|Yes?
 q#what:can:you:do
@@ -155,13 +161,15 @@ Glad you're amazed
 q#you:cool
 Am I?|Haha|You're cooler
 q#my:age
-I don't know your age, tell me later and I'll remember
+I don't know your age
+q#i:am:year:old
+I won't remember that
 q#my:birthday
 Happy Birthday!|Happy Birthday to you!|Congratulations!
 q#know:my:dog:name
 I don't know your dog's name
 q#know:my:cat:name
-I don't know your dog's name
+I don't know your cat's name
 q#what:os:you:built:on
 I was originally built on Windows using C#, but now I'm being built on Ubuntu using Python
 q#you:buggy
