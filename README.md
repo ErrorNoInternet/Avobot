@@ -37,3 +37,13 @@ This chatbot requires no Python modules to be installed. All the modules that it
 # How the chatbot works
 
 Everytime you run the chatbot, it will read from a file called ``responses.data`` and get all the lines from it. It will check if there is ``q#`` in the line, and if it is in the line, it will mark that line as a question. If it is not in the line, it will mark the line as an answer. Whenever you ask the chatbot a question, it will check for all the questions and answers.
+
+### Libraries
+
+- os (resetting data file)
+- time (time and time.sleep)
+- random (random responses)
+- tkinter (window and messagebox)
+- datetime (time and date)
+- requests (weather and web search)
+- threading (preventing GUI lag)
