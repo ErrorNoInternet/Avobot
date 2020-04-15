@@ -13,22 +13,22 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - Random word generator
 - Memory (name only)
 - Emotions (a few responses will change)
+- Search results (From Bing)
 
 ### Upcoming Features
 
-- Search results
 - LAN messaging
 - Calculator
-- Web data retrieving
 - Timers and stopwatches
 - Memory (names & birthdays)
 - Reminders and alarms
-- Text-to-speech input and output
+- Text-to-speech
 
 # Requirements 
 
 - Python 3.4+ (Built on 3.6.9) 
 - Internet connection for weather
+- pip install IPython
 
 # How to setup
 
@@ -41,9 +41,11 @@ Everytime you run the chatbot, it will read from a file called ``responses.data`
 ### Libraries
 
 - os (resetting data file)
+- re (formatting HTML result)
 - time (time and time.sleep)
 - random (random responses)
 - tkinter (window and messagebox)
 - datetime (time and date)
 - requests (weather and web search)
 - threading (preventing GUI lag)
+- IPython (processing HTML data)
