@@ -13,7 +13,7 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - Random word generator
 - Memory (name only)
 - Emotions (a few responses will change)
-- Search results (From Bing)
+- Search results (from Bing)
 
 ### Upcoming Features
 
