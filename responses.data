@@ -1,5 +1,9 @@
 q#say:
 Say-
+q#open:/
+Opening
+q#open:\
+Opening
 q#how:are:you
 I'm fine|I'm good!|I'm OK, thanks for caring!
 q#i:can:teach:you
@@ -15,15 +19,25 @@ My name is Avobot|Avobot
 q#ur:name
 My name is Avobot|Avobot
 q#thank
-You're welcome|I live to serve (and chat)|I'll always help you|I'm always by your side
+You're welcome|I live to help (and chat)|I'll always help you|I'm always by your side
 q#weather:for
 Weather: Please wait...
 q#weather:in
 Weather2: Please wait...
+q#endless:clock
+Running endless clock
+q#continuous:clock
+Running endless clock
+q#nonstop:clock
+Running endless clock
 q#sorry
 It's OK...|I forgive you|It's fine
+q#go:away
+Goodbye!
 q#made:you
 Someone called Ryan made me|My creator is Ryan|Ryan, a programmer
+q#you:not:smart
+I'm improving|I'm still young|Aw...|:(
 q#you:smart
 Thanks!|I'm still getting better everyday|You're smarter
 q#supercalifragilisticexpialidocious
@@ -134,12 +148,14 @@ q#what:can:you:do
 I can do many things|I can chat with you
 q#my:name
 Your name is
+q#search
+Searching web
 q#im:bored
 We're all bored|I'm bored too|Let's chat
 q#i'm:bored
 We're all bored|I'm bored too|Let's chat
-q#about:what
-I don't know, maybe food?|I dunno|You choose
+q#chat:about:what
+I don't know, maybe coding?|I dunno|You choose
 q#who:you
 I'm Avobot, remember?|I'm Avobot, your personal assistant|I'm Avobot|I'm your personal assistant
 q#steve:jobs
@@ -252,4 +268,6 @@ q#what:should:we:do
 I don't know
 q#oh
 Yea...
+q#what:you:built:on
+I was built on a Raspberry Pi 3B+ running Ubuntu MATE 18.04
 #ENDFILE#

@@ -1,16 +1,20 @@
 import os
+import re
+import sys
 import time
 import random
 import tkinter
 import datetime
 import requests
 import threading
+import subprocess
 from tkinter import *
 from tkinter import ttk
 from threading import Thread
 from tkinter import messagebox
+from IPython.display import HTML
 weatherAPIKey = "a4aa5e3d83ffefaba8c00284de6ef7c3"
-bingSearchAPIKey = ""
+bingSearchAPIKey = "537fecf13d894cbe8781e6c6a593dc61"
 emotionCounter = 0
 unknownResponse = ["I don't understand you", "What do you mean?", "I couldn't find an answer to that", "What did you say?", "Please say that in another way", "Couldn't find that in my database"]
 try:
@@ -18,6 +22,74 @@ try:
         lines = [line.rstrip() for line in file]
 except:
     messagebox.showerror("Error", "Could not find responses.data")
+def searchWeb():
+    insertText("Searching the web for \"" + inputBox.get() + "\"")
+    searchThread = threading.Thread(target=getWebResult)
+    searchThread.start()
+def getWebResult():
+    try:
+        subscriptionKey = bingSearchAPIKey
+        assert subscriptionKey
+        searchUrl = "https://api.cognitive.microsoft.com/bing/v7.0/search"
+        searchTerm = inputBox.get()
+        inputBox.delete(0, tkinter.END)
+        headers = {"Ocp-Apim-Subscription-Key": subscriptionKey}
+        params = {"q": searchTerm, "textDecorations": True, "textFormat": "HTML"}
+        response = requests.get(searchUrl, headers=headers, params=params)
+        response.raise_for_status()
+        searchResults = response.json()
+        rows = "\n".join(["""<tr>
+                           <td><a href=\"{0}\">{1}</a></td>
+                           <td>{2}</td>
+                         </tr>""".format(v["url"], v["name"], v["snippet"])
+                      for v in searchResults["webPages"]["value"]])
+        HTML("<table>{0}</table>".format(rows))
+        start_sep='<td>'
+        end_sep='</td>'
+        result=[]
+        tmp=rows.split(start_sep)
+        for par in tmp:
+          if end_sep in par:
+            result.append(par.split(end_sep)[0])
+        start_sep='<td>'
+        end_sep='</td>'
+        result=[]
+        tmp=rows.split(start_sep)
+        counter = 0
+        for par in tmp:
+          if end_sep in par:
+            if "href" in par.split(end_sep)[0]:
+                result.append(par.split(end_sep)[0])
+                counter = counter + 1
+                result.append("\n\n")
+            else:
+                pass
+        new = ""
+        for item in result:
+            new += item
+        new = new.replace("<a href=\"", "Link: ")
+        new = new.replace("\">", "\nTitle: ")
+        final = new.replace("</a>", "")
+        insertText("Found " + str(counter+1) + " results: \n\n" + final)
+        inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
+        evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
+    except:
+        insertText("Couldn't get any results from the web")
+def openFile(filename):
+    if sys.platform == "win32":
+        os.startfile(filename)
+    else:
+        opener = "open" if sys.platform == "darwin" else "xdg-open"
+        subprocess.call([opener, filename])
+def endlessClock():
+    while "stop" not in inputBox.get():
+        localTime = time.localtime()
+        date = datetime.datetime.now()
+        currentTime = datetime.datetime.now().time()
+        insertText("Time: " + str(currentTime) + "\nDate: %s/%s/%s (M/D/Y)" %(date.month, date.day, date.year))
+        time.sleep(0.1)
+    inputBox.delete(0, tkinter.END)
+    insertText("Stopped the clock")
 def waitExitThread():
     insertText("Bye " + userName + "! [2]")
     time.sleep(1)
@@ -38,17 +110,28 @@ def checkWeather():
     def format_response(weather):
         try:
             name = weather['name']
+            locationLon = weather['coord']['lon']
+            locationLat = weather['coord']['lat']
             desc = weather['weather'][0]['description']
             temp = weather['main']['temp']
-            temp = temp-32	
-            temp = temp*5/9
-            temp = round(temp,2)
-            finalWeather = 'Weather for %s: \nCondition: %s \nTemperature (°C): %s' % (name, desc, temp)
-        except:
+            feelslike = weather['main']['feels_like']
+            tempMin = weather['main']['temp_min']
+            tempMax = weather['main']['temp_max']
+            speed = weather['wind']['speed']
+            humidity = weather['main']['humidity']
+            country = weather['sys']['country']
+            desc = desc.title()
+            def convertToCelsius(integer):
+                integer = integer-32	
+                integer = integer*5/9
+                integer = round(integer, 2)
+                return integer
+            finalWeather = 'Weather for %s, %s: \n\nLongitude: %s, Latitude: %s\nCondition: %s \nCurrent Temperature (°C): %s\nLowest Temperature (°C): %s\nHighest Temperature (°C): %s\nTemperature Feels Like (°C): %s\nWind Speed (KM/H): %s\nAir Humidity (Percent): %s' % (name, country, locationLon, locationLat,desc, convertToCelsius(temp), convertToCelsius(tempMin), convertToCelsius(tempMax), convertToCelsius(feelslike), speed, humidity)
+        except Exception as error:
             if emotionCounter == 1:
                 finalWeather = "Couldn't get the weather"
             else:
-                finalWeather = 'There was a problem processing weather data'
+                finalWeather = 'Your city name does not exist'
         return finalWeather
     def getWeather(city):
         inputBox.delete(0, tkinter.END)
@@ -63,7 +146,7 @@ def checkWeather():
             if emotionCounter == 1:
                 insertText("Couldn't get the weather")
             else:
-                insertText("There was a problem retrieving the weather")
+                insertText("Failed to get the weather, are you connected to the internet?")
     getWeather(inputBox.get())
 def writeName(name):
     dataFile = open("userData.data", "w+")
@@ -91,9 +174,12 @@ def evaluateInput(userInput):
         userInput = userInput.upper()
         if "FUCK" in userInput or "BITCH" in userInput or "SHIT" in userInput and "SAY:" in userInput:
             pass
-        if "FUCK" in userInput or "BITCH" in userInput or "SHIT" in userInput and "SAY:" not in userInput:
-            global emotionCounter
-            emotionCounter = 1
+        if "FUCK" in userInput or "BITCH" in userInput or "SHIT" in userInput:
+            if "SAY" in userInput:
+                pass
+            else:
+                global emotionCounter
+                emotionCounter = 1
         if "SORRY" in userInput:
             emotionCounter = 0
         for line in lines:
@@ -140,11 +226,14 @@ def evaluateInput(userInput):
                                 else:
                                     insertText("I couldn't reset your name, did you already reset it?")
                         elif output == "Your name is":
-                            with open("userData.data") as dataFile:
-                               lines2 = [line2.rstrip() for line2 in dataFile]
-                            userName = lines2[0]
-                            dataFile.close()
-                            insertText("Your name is " + userName + ". Did you forget?")
+                            try:
+                                with open("userData.data") as dataFile:
+                                   lines2 = [line2.rstrip() for line2 in dataFile]
+                                userName = lines2[0]
+                                dataFile.close()
+                                insertText("Your name is " + userName + ". Did you forget?")
+                            except:
+                                insertText("You've resetted your name, please restart Avobot to set a new name")
                         elif output == "Say-":
                             try:
                                 if emotionCounter == 1:
@@ -166,6 +255,8 @@ def evaluateInput(userInput):
                                 insertText("Use \"Say:[Text]\"")
                         elif output == "Weather: Please wait...":
                             weatherCity = originalInput.replace(" like", "")
+                            weatherCity = weatherCity.replace('?', "")
+                            weatherCity = weatherCity.replace("today", "")
                             weatherCity = weatherCity.split(" for ")[1]
                             inputBox.delete(0, tkinter.END)
                             inputBox.insert(0, weatherCity)
@@ -173,6 +264,8 @@ def evaluateInput(userInput):
                             checkWeatherThread.start()
                         elif output == "Weather2: Please wait...":
                             weatherCity = originalInput.replace(" like", "")
+                            weatherCity = weatherCity.replace('?', "")
+                            weatherCity = weatherCity.replace("today", "")
                             weatherCity = weatherCity.split(" in ")[1]
                             inputBox.delete(0, tkinter.END)
                             inputBox.insert(0, weatherCity)
@@ -182,6 +275,39 @@ def evaluateInput(userInput):
                             insertText("For which city?")
                             inputBox.bind("<Return>", (lambda event:getWeatherText()))
                             evaluateButton['command'] = lambda:getWeatherText()
+                        elif output == "Running endless clock":
+                            clockThread = threading.Thread(target=endlessClock)
+                            clockThread.start()
+                        elif output == "Opening":
+                            startFile = originalInput
+                            startFile = startFile.replace("OPEN", "open")
+                            startFile = startFile.replace("Open", "open")
+                            startFile = startFile.replace("oPEN", "open")
+                            startFile = startFile.split("open ")[1]
+                            try:
+                                openFile(str(startFile))
+                                insertText("Opened " + str(startFile))
+                            except Exception as error:
+                                insertText("Failed to open " + str(startFile) + "\n" + str(error))
+                        elif output == "Searching web":
+                            if "FOR" in userInput:
+                                searchString = originalInput
+                                searchString = searchString.replace("SEARCH", "search")
+                                searchString = searchString.replace("Search", "search")
+                                searchString = searchString.replace("sEARCH", "search")
+                                searchString = searchString.replace("FOR", "for")
+                                searchString = searchString.replace("For", "for")
+                                searchString = searchString.replace("fOR", "for")
+                                searchTerm = searchString.split("search for ")[1]
+                                inputBox.delete(0, tkinter.END)
+                                inputBox.insert(0, searchTerm)
+                                insertText("Searching the web for \"" + inputBox.get() + "\"")
+                                searchThread = threading.Thread(target=getWebResult)
+                                searchThread.start()
+                            else:
+                                insertText("What do you want to search?")
+                                inputBox.bind("<Return>", (lambda event:searchWeb()))
+                                evaluateButton['command'] = lambda:searchWeb()
                         else:
                             insertText(output)
                         break
