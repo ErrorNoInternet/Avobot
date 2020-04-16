@@ -14,6 +14,7 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - Memory (name only)
 - Emotions (a few responses will change)
 - Search results (from Bing)
+- Launching folders and files
 
 ### Upcoming Features
 
@@ -28,7 +29,7 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 
 - Python 3.4+ (Built on 3.6.9) 
 - Internet connection for weather
-- pip install IPython
+- ``pip install IPython``
 
 # How to setup
 
@@ -36,7 +37,7 @@ This chatbot requires no Python modules to be installed. All the modules that it
 
 # How the chatbot works
 
-Everytime you run the chatbot, it will read from a file called ``responses.data`` and get all the lines from it. It will check if there is ``q#`` in the line, and if it is in the line, it will mark that line as a question. If it is not in the line, it will mark the line as an answer. Whenever you ask the chatbot a question, it will check for all the questions and answers (There are a few swearwords in the code).
+Everytime you run the chatbot, it will read from a file called ``responses.data`` and get all the lines from it. It will check if there is ``q#`` in the line, and if it is in the line, it will mark that line as a question. If it is not in the line, it will mark the line as an answer. Whenever you ask the chatbot a question, it will check for all the questions and answers (If you want to add your own, add it at the top of ``responses.data``).
 
 ### Libraries
 
@@ -49,3 +50,5 @@ Everytime you run the chatbot, it will read from a file called ``responses.data`
 - requests (weather and web search)
 - threading (preventing GUI lag)
 - IPython (processing HTML data)
+- subprocess (launching files)
+- sys (checking system OS)
