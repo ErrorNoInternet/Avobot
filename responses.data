@@ -4,18 +4,22 @@ q#open:/
 Opening
 q#open:\
 Opening
+q#open
+Opening
 q#how:are:you
 I'm fine|I'm good!|I'm OK, thanks for caring!
 q#i:can:teach:you
 I can't learn, the only thing I can remember is your name
 q#you:amazing
 Haha|Thanks|[Smiley Face]
+q#search
+Searching web
 q#hello
 Hi!|How can I help you?|Yea?|What's up|Hello|Nice to meet you!
 q#you:name
+My name is Avobot|Avobot
 q#oof
 Hehe
-My name is Avobot|Avobot
 q#ur:name
 My name is Avobot|Avobot
 q#thank
@@ -148,8 +152,6 @@ q#what:can:you:do
 I can do many things|I can chat with you
 q#my:name
 Your name is
-q#search
-Searching web
 q#im:bored
 We're all bored|I'm bored too|Let's chat
 q#i'm:bored

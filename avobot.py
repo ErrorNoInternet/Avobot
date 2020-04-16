@@ -13,6 +13,7 @@ from tkinter import ttk
 from threading import Thread
 from tkinter import messagebox
 from IPython.display import HTML
+from ttkthemes import ThemedStyle
 weatherAPIKey = "a4aa5e3d83ffefaba8c00284de6ef7c3"
 bingSearchAPIKey = "537fecf13d894cbe8781e6c6a593dc61"
 emotionCounter = 0
@@ -90,14 +91,30 @@ def endlessClock():
         time.sleep(0.1)
     inputBox.delete(0, tkinter.END)
     insertText("Stopped the clock")
+def startExitThread():
+    exitThread = threading.Thread(target=waitExitThread)
+    exitThread.start()
 def waitExitThread():
-    insertText("Bye " + userName + "! [2]")
-    time.sleep(1)
-    insertText("Bye " + userName + "! [1]")
-    time.sleep(1)
-    avobot.destroy()
-    file.close()
-    sys.exit()
+    try:
+        with open("userData.data") as dataFile:
+            lines2 = [line2.rstrip() for line2 in dataFile]
+        userName = lines2[0]
+        insertText("Bye " + userName + "! [2]")
+        time.sleep(1)
+        insertText("Bye " + userName + "! [1]")
+        time.sleep(1)
+        avobot.destroy()
+        file.close()
+        sys.exit()
+    except:
+        userName = "User"
+        insertText("Bye " + userName + "! [2]")
+        time.sleep(1)
+        insertText("Bye " + userName + "! [1]")
+        time.sleep(1)
+        avobot.destroy()
+        file.close()
+        sys.exit()
 def getWeatherText():
     insertText("Please wait, I'm checking the weather for %s now" %(inputBox.get()))
     cityName = inputBox.get()
@@ -149,6 +166,9 @@ def checkWeather():
                 insertText("Failed to get the weather, are you connected to the internet?")
     getWeather(inputBox.get())
 def writeName(name):
+    if name.upper() == "NO":
+        insertText("Why? Fine, I'll just call you 'User' then")
+        name = "User"
     dataFile = open("userData.data", "w+")
     dataFile.write(name)
     dataFile.close()
@@ -159,9 +179,12 @@ def writeName(name):
     inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
     evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
     inputBox.delete(0, tkinter.END)
-    insertText("Nice to meet you " + userName + "! How can I help you today?")
-    with open("responses.data") as file:
-        lines = [line.rstrip() for line in file]
+    if userName == "User":
+        pass
+    else:
+        insertText("Nice to meet you " + userName + "! How can I help you today?")
+        with open("responses.data") as file:
+            lines = [line.rstrip() for line in file]
 def insertText(text):
     outputBox.delete('1.0', tkinter.END)
     outputBox.insert('1.0', str(text))
@@ -319,15 +342,18 @@ def evaluateInput(userInput):
         insertText(random.choice(["You didn't enter anything", "Please enter something", "Say something...", "I don't see anything...?"]))
 avobot = tkinter.Tk()
 avobot.title("Avobot (Beta 0.05)")
+style = ThemedStyle(avobot)
+style.set_theme("arc")
 avobot.resizable(False, False)
+avobot.protocol("WM_DELETE_WINDOW", startExitThread)
 inputLabel = Label(avobot, text = "Input")
 inputLabel.grid(row = 0, column = 0, sticky=N+W, ipadx=5, ipady=5, padx=5, pady=5)
 inputBox = ttk.Entry(avobot, width = 40)
 inputBox.grid(row = 0, column = 1)
-outputBox = Text(avobot, font=("calibri", 12), height=10, width=48)
+outputBox = Text(avobot, font=("calibri", 12), height=10, width=48, wrap=tkinter.WORD, borderwidth=0)
 evaluateButton = ttk.Button(avobot, text="Done", command = lambda:evaluateInput(inputBox.get()))
 inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
-evaluateButton.grid(row = 0, column = 2, padx=5, pady=7)
+evaluateButton.grid(row = 0, column = 2, padx=5, pady=3)
 outputBox.grid(row = 1, columnspan=3)
 try:
     with open("userData.data") as dataFile:
@@ -336,7 +362,7 @@ try:
     dataFile.close()
     insertText("Hello " + userName + "! How can I help you today?")
 except:
-    insertText("Please tell me your name")
+    insertText("Hello! Can you please tell me your name?")
     inputBox.bind("<Return>", (lambda event:writeName(inputBox.get())))
     evaluateButton['command'] = lambda:writeName(inputBox.get())
 avobot.mainloop()
