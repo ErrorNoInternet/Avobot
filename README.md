@@ -11,10 +11,10 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - Editable ``responses.data`` file
 - Random number generator
 - Random word generator
-- Memory (name only)
+- Memory (name and emotions only)
 - Emotions (a few responses will change)
 - Search results (from Bing)
-- Launching folders and files
+- Launching anything on your PC
 
 ### Upcoming Features
 
@@ -53,3 +53,4 @@ Everytime you run the chatbot, it will read from a file called ``responses.data`
 - IPython (processing HTML data)
 - subprocess (launching files)
 - sys (checking system OS)
+- ttkthemes (theme for the GUI)
