@@ -30,6 +30,7 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - Python 3.4+ (Built on 3.6.9) 
 - Internet connection for weather
 - ``pip install IPython``
+- ``pip install ttkthemes``
 
 # How to setup
 
