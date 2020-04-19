@@ -21,7 +21,6 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - LAN messaging
 - Calculator
 - Timers and stopwatches
-- Memory (names & birthdays)
 - Reminders and alarms
 - Text-to-speech
 
@@ -30,7 +29,6 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 - Python 3.4+ (Built on 3.6.9) 
 - Internet connection for searches
 - ``pip install IPython``
-- ``pip install ttkthemes``
 
 # How to setup
 
@@ -53,4 +51,3 @@ Everytime you run the chatbot, it will read from a file called ``responses.data`
 - IPython (processing HTML data)
 - subprocess (launching files)
 - sys (checking system OS)
-- ttkthemes (theme for the GUI)
