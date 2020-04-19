@@ -13,7 +13,6 @@ from tkinter import ttk
 from threading import Thread
 from tkinter import messagebox
 from IPython.display import HTML
-from ttkthemes import ThemedStyle
 weatherAPIKey = "a4aa5e3d83ffefaba8c00284de6ef7c3"
 bingSearchAPIKey = "537fecf13d894cbe8781e6c6a593dc61"
 emotionCounter = 0
@@ -62,15 +61,21 @@ def getWebResult():
             if "href" in par.split(end_sep)[0]:
                 result.append(par.split(end_sep)[0])
                 counter = counter + 1
-                result.append("\n\n")
+                result.append("\n")
             else:
-                pass
+                result.append(par.split(end_sep)[0])
+                result.append("\n\n")
         new = ""
         for item in result:
             new += item
         new = new.replace("<a href=\"", "Link: ")
         new = new.replace("\">", "\nTitle: ")
         final = new.replace("</a>", "")
+        final = final.replace("<b>", "")
+        final = final.replace("</b>", "")
+        final = final.replace("&#39;", "")
+        final = final.replace("&quot;", "\"")
+        final = final.replace("&amp;", "and")
         insertText("Found " + str(counter+1) + " results: \n\n" + final)
         inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
         evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
@@ -83,38 +88,34 @@ def openFile(filename):
         opener = "open" if sys.platform == "darwin" else "xdg-open"
         subprocess.call([opener, filename])
 def endlessClock():
-    while "stop" not in inputBox.get():
+    inputBox.bind("<Return>", (lambda event:print("Clock is running")))
+    evaluateButton['command'] = lambda:print("Clock is running")
+    while "STOP" not in inputBox.get().upper():
         localTime = time.localtime()
         date = datetime.datetime.now()
         currentTime = datetime.datetime.now().time()
         insertText("Time: " + str(currentTime) + "\nDate: %s/%s/%s (M/D/Y)" %(date.month, date.day, date.year))
         time.sleep(0.1)
+    inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
+    evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
     inputBox.delete(0, tkinter.END)
     insertText("Stopped the clock")
-def startExitThread():
-    exitThread = threading.Thread(target=waitExitThread)
-    exitThread.start()
 def waitExitThread():
+    userName = ""
     try:
         with open("userData.data") as dataFile:
             lines2 = [line2.rstrip() for line2 in dataFile]
         userName = lines2[0]
-        insertText("Bye " + userName + "! [2]")
-        time.sleep(1)
-        insertText("Bye " + userName + "! [1]")
-        time.sleep(1)
-        avobot.destroy()
-        file.close()
-        sys.exit()
     except:
         userName = "User"
-        insertText("Bye " + userName + "! [2]")
-        time.sleep(1)
-        insertText("Bye " + userName + "! [1]")
-        time.sleep(1)
-        avobot.destroy()
-        file.close()
-        sys.exit()
+    insertText("Bye " + userName + "! [2]")
+    time.sleep(1)
+    insertText("Bye " + userName + "! [1]")
+    time.sleep(1)
+    avobot.destroy()
+    file.close()
+    sys.exit()
+    exit()
 def getWeatherText():
     insertText("Please wait, I'm checking the weather for %s now" %(inputBox.get()))
     cityName = inputBox.get()
@@ -143,7 +144,7 @@ def checkWeather():
                 integer = integer*5/9
                 integer = round(integer, 2)
                 return integer
-            finalWeather = 'Weather for %s, %s: \n\nLongitude: %s, Latitude: %s\nCondition: %s \nCurrent Temperature (°C): %s\nLowest Temperature (°C): %s\nHighest Temperature (°C): %s\nTemperature Feels Like (°C): %s\nWind Speed (KM/H): %s\nAir Humidity (Percent): %s' % (name, country, locationLon, locationLat,desc, convertToCelsius(temp), convertToCelsius(tempMin), convertToCelsius(tempMax), convertToCelsius(feelslike), speed, humidity)
+            finalWeather = 'Weather for %s, %s: \nLongitude: %s, Latitude: %s\nCondition: %s \nCurrent Temperature (°C): %s\nLowest Temperature (°C): %s\nHighest Temperature (°C): %s\nTemperature Feels Like (°C): %s\nWind Speed (KM/H): %s\nAir Humidity (Percent): %s' % (name, country, locationLon, locationLat,desc, convertToCelsius(temp), convertToCelsius(tempMin), convertToCelsius(tempMax), convertToCelsius(feelslike), speed, humidity)
         except Exception as error:
             if emotionCounter == 1:
                 finalWeather = "Couldn't get the weather"
@@ -166,25 +167,22 @@ def checkWeather():
                 insertText("Failed to get the weather, are you connected to the internet?")
     getWeather(inputBox.get())
 def writeName(name):
-    if name.upper() == "NO":
-        insertText("Why? Fine, I'll just call you 'User' then")
-        name = "User"
-    dataFile = open("userData.data", "w+")
-    dataFile.write(name)
-    dataFile.close()
-    with open("userData.data") as dataFile:
-       lines2 = [line2.rstrip() for line2 in dataFile]
-    userName = lines2[0]
-    dataFile.close()
-    inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
-    evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
-    inputBox.delete(0, tkinter.END)
-    if userName == "User":
-        pass
-    else:
+    try:
+        dataFile = open("userData.data", "w+")
+        dataFile.write(name)
+        dataFile.close()
+        with open("userData.data") as dataFile:
+           lines2 = [line2.rstrip() for line2 in dataFile]
+        userName = lines2[0]
+        dataFile.close()
+        inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
+        evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
+        inputBox.delete(0, tkinter.END)
         insertText("Nice to meet you " + userName + "! How can I help you today?")
         with open("responses.data") as file:
             lines = [line.rstrip() for line in file]
+    except:
+        insertText("I can't remember your name, try running me as administrator")
 def insertText(text):
     outputBox.delete('1.0', tkinter.END)
     outputBox.insert('1.0', str(text))
@@ -314,19 +312,22 @@ def evaluateInput(userInput):
                                 insertText("Failed to open " + str(startFile) + "\n" + str(error))
                         elif output == "Searching web":
                             if "FOR" in userInput:
-                                searchString = originalInput
-                                searchString = searchString.replace("SEARCH", "search")
-                                searchString = searchString.replace("Search", "search")
-                                searchString = searchString.replace("sEARCH", "search")
-                                searchString = searchString.replace("FOR", "for")
-                                searchString = searchString.replace("For", "for")
-                                searchString = searchString.replace("fOR", "for")
-                                searchTerm = searchString.split("search for ")[1]
-                                inputBox.delete(0, tkinter.END)
-                                inputBox.insert(0, searchTerm)
-                                insertText("Searching the web for \"" + inputBox.get() + "\"")
-                                searchThread = threading.Thread(target=getWebResult)
-                                searchThread.start()
+                                try:
+                                    searchString = originalInput
+                                    searchString = searchString.replace("SEARCH", "search")
+                                    searchString = searchString.replace("Search", "search")
+                                    searchString = searchString.replace("sEARCH", "search")
+                                    searchString = searchString.replace("FOR", "for")
+                                    searchString = searchString.replace("For", "for")
+                                    searchString = searchString.replace("fOR", "for")
+                                    searchTerm = searchString.split("search for ")[1]
+                                    inputBox.delete(0, tkinter.END)
+                                    inputBox.insert(0, searchTerm)
+                                    insertText("Searching the web for \"" + inputBox.get() + "\"")
+                                    searchThread = threading.Thread(target=getWebResult)
+                                    searchThread.start()
+                                except:
+                                    insertText("Use \"Search for: [Term]\"")
                             else:
                                 insertText("What do you want to search?")
                                 inputBox.bind("<Return>", (lambda event:searchWeb()))
@@ -342,18 +343,15 @@ def evaluateInput(userInput):
         insertText(random.choice(["You didn't enter anything", "Please enter something", "Say something...", "I don't see anything...?"]))
 avobot = tkinter.Tk()
 avobot.title("Avobot (Beta 0.05)")
-style = ThemedStyle(avobot)
-style.set_theme("arc")
 avobot.resizable(False, False)
-avobot.protocol("WM_DELETE_WINDOW", startExitThread)
 inputLabel = Label(avobot, text = "Input")
 inputLabel.grid(row = 0, column = 0, sticky=N+W, ipadx=5, ipady=5, padx=5, pady=5)
 inputBox = ttk.Entry(avobot, width = 40)
 inputBox.grid(row = 0, column = 1)
-outputBox = Text(avobot, font=("calibri", 12), height=10, width=48, wrap=tkinter.WORD, borderwidth=0)
+outputBox = Text(avobot, font=("calibri", 12), height=10, width=48)
 evaluateButton = ttk.Button(avobot, text="Done", command = lambda:evaluateInput(inputBox.get()))
 inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
-evaluateButton.grid(row = 0, column = 2, padx=5, pady=3)
+evaluateButton.grid(row = 0, column = 2, padx=5, pady=7)
 outputBox.grid(row = 1, columnspan=3)
 try:
     with open("userData.data") as dataFile:
@@ -362,7 +360,7 @@ try:
     dataFile.close()
     insertText("Hello " + userName + "! How can I help you today?")
 except:
-    insertText("Hello! Can you please tell me your name?")
+    insertText("Please tell me your name")
     inputBox.bind("<Return>", (lambda event:writeName(inputBox.get())))
     evaluateButton['command'] = lambda:writeName(inputBox.get())
 avobot.mainloop()

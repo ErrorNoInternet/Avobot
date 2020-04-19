@@ -1,5 +1,7 @@
 q#say:
 Say-
+q#search
+Searching web
 q#open:/
 Opening
 q#open:\
@@ -12,18 +14,21 @@ q#i:can:teach:you
 I can't learn, the only thing I can remember is your name
 q#you:amazing
 Haha|Thanks|[Smiley Face]
-q#search
-Searching web
 q#hello
 Hi!|How can I help you?|Yea?|What's up|Hello|Nice to meet you!
+q#oh
+Yea...
 q#you:name
 My name is Avobot|Avobot
 q#oof
 Hehe
+My name is Avobot|Avobot
 q#ur:name
 My name is Avobot|Avobot
 q#thank
 You're welcome|I live to help (and chat)|I'll always help you|I'm always by your side
+q#weather:tomorrow
+I can't predict the weather yet
 q#weather:for
 Weather: Please wait...
 q#weather:in
@@ -48,6 +53,8 @@ q#supercalifragilisticexpialidocious
 Nice spelling!|Wow|Nice!
 q#hey
 Waddup?|Yes?|Yea?|What?|Need something?|Hmm?
+q#easter-egg-hmm
+EASTER EGG FOUND!
 q#what:up
 The ceiling, lol!|The birds?|Just chatting with you
 q#tell:joke
@@ -86,14 +93,12 @@ q#exit
 Goodbye!
 q#haha
 Funny?|Lol|Hahahaha|lmao|hahahahahahahahahahah
-q#easter-egg-lol
-You've found the easter egg!
 q#lol
 Hahahaah|Laugh out loud|HAHAHAHAHAHHAHAHAHAA
 q#lmao
 Is it really that funny?|LOOOL|HAHAHA|LMFAO
 q#lmfao
-Is it really that funny???|HAAAAAAAH|Lol
+Is it really that funny???|HAAAAAAAH|
 q#nvm
 Ok
 q#ok
@@ -176,8 +181,12 @@ q#nvm
 Ok
 q#wow
 Glad you're amazed
+q#waddup
+Chatting|Nothing|Idk
 q#you:cool
 Am I?|Haha|You're cooler
+q#you:suck
+Wow, you hurt my feelings|:(|I am getting better!
 q#my:age
 I don't know your age
 q#i:am:year:old
@@ -268,8 +277,8 @@ q#what:happen
 I don't know
 q#what:should:we:do
 I don't know
-q#oh
-Yea...
 q#what:you:built:on
+I was built on a Raspberry Pi 3B+ running Ubuntu MATE 18.04
+q#what:you:built:using
 I was built on a Raspberry Pi 3B+ running Ubuntu MATE 18.04
 #ENDFILE#
