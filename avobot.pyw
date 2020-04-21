@@ -98,12 +98,12 @@ def endlessClock():
         localTime = time.localtime()
         date = datetime.datetime.now()
         currentTime = datetime.datetime.now().time()
-        insertText("Time: " + str(currentTime) + "\nDate: %s/%s/%s (M/D/Y)" %(date.month, date.day, date.year))
+        insertText("Time: " + str(currentTime) + "\nDate: %s/%s/%s (M/D/Y)" %(date.month, date.day, date.year), "instant")
         time.sleep(0.1)
     inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
     evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
     inputBox.delete(0, tkinter.END)
-    insertText("Stopped the clock")
+    insertText("Stopped the clock", "instant")
 def waitExitThread():
     userName = ""
     try:
