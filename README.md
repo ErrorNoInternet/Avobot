@@ -28,11 +28,11 @@ Avobot is a simple chatbot that can chat with you when you're bored. It is made 
 
 - Python 3.4+ (Built on 3.6.9) 
 - Internet connection for searches
-- ``pip install IPython``
+- ``pip install BeautifulSoup4``
 
 # How to setup
 
-This chatbot requires no Python modules to be installed. All the modules that it uses are already in Python. All you need to do is run the ``Avobot.py`` file (make sure that ``responses.data`` is also in the same folder) and chat with your bot!
+First, make sure you've done all the requirements and then all you need to do is run the ``Avobot.py`` file (make sure that ``responses.data`` is also in the same folder) and chat with your bot!
 
 # How the chatbot works
 
@@ -48,6 +48,7 @@ Everytime you run the chatbot, it will read from a file called ``responses.data`
 - datetime (time and date)
 - requests (weather and web search)
 - threading (preventing GUI lag)
-- IPython (processing HTML data)
+- BeautifulSoup (processing HTML data)
 - subprocess (launching files)
 - sys (checking system OS)
+- urllib (getting HTML from Bing)
