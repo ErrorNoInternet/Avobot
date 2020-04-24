@@ -2,6 +2,14 @@ q#say:
 Say-
 q#why:web:search:broke
 Ok, here's a full explanation: Before, Avobot uses the Microsoft search API to search for results. But the API key is not free and expires after 7 days. So, after 7 days, here we are. For some reason, the requests module doesn't get all the results from the Bing website. It doesn't work well with spaces and has a ton of more bugs. I really need help, so please help on GitHub if you can. Thanks!
+q#sad:story
+Yes, I know...
+q#version:
+My version is
+q#u:dumb
+I'm dumb? No way!
+q#github:link
+My GitHub link is https://www.github.com/ErrorNoInternet/Avobot`You can see my code there!
 q#search
 Searching web
 q#open:/
@@ -60,7 +68,7 @@ EASTER EGG FOUND!
 q#what:up
 The ceiling, lol!|The birds?|Just chatting with you
 q#tell:joke
-Who's the baaaad guy? Billie Eillish. Duh!|Why did the chicken cross the road? Because he wanted to.|Why do the actors have to "break a leg?" Because every play has a cast
+Who's the baaaad guy?```Billie Eillish.```Duh!|Why did the chicken cross the road? `````````I dunno|Why do the actors have to "break a leg?"```Because every play has a cast
 q#what:can:i:say
 You can say many things|I'm a chatbot, so try to chat with me
 q#where:am:i
@@ -98,7 +106,7 @@ Hahahaah|Laugh out loud|HAHAHAHAHAHHAHAHAHAA
 q#lmao
 Is it really that funny?|LOOOL|HAHAHA|LMFAO
 q#lmfao
-Is it really that funny???|HAAAAAAAH|
+Is it really that funny???|HAAAAAAAH
 q#nvm
 Ok
 q#ok
@@ -154,7 +162,7 @@ q#bitch
 q#hi
 Hello!|Hi!!|What's up?|Hello|Yes?
 q#what:can:you:do
-I can do many things|I can chat with you
+I can do many things|I can chat with you|I can do many things, check my github!
 q#my:name
 Your name is
 q#im:bored

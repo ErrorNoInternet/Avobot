@@ -17,6 +17,7 @@ from tkinter import messagebox
 from urllib.request import urlopen, Request
 from urllib.parse import urlencode, urlunparse
 weatherAPIKey = "a4aa5e3d83ffefaba8c00284de6ef7c3"
+version = "0.07"
 emotionCounter = 0
 unknownResponse = ["I don't understand you", "What do you mean?", "I couldn't find an answer to that", "What did you say?", "Please say that in another way", "Couldn't find that in my database"]
 try:
@@ -86,8 +87,8 @@ def openFile(filename):
         opener = "open" if sys.platform == "darwin" else "xdg-open"
         subprocess.call([opener, filename])
 def endlessClock():
-    inputBox.bind("<Return>", (lambda event:print("Clock is running")))
-    evaluateButton['command'] = lambda:print("Clock is running")
+    inputBox.bind("<Return>", (lambda event:inputBox.delete(0, tkinter.END)))
+    evaluateButton['command'] = lambda:inputBox.delete(0, tkinter.END)
     while "STOP" not in inputBox.get().upper():
         localTime = time.localtime()
         date = datetime.datetime.now()
@@ -118,10 +119,13 @@ def waitExitThread():
             avobot.attributes("-alpha", alpha)
             avobot.after(1, fade)
         else:
-            avobot.destroy()
-            file.close()
-            sys.exit()
-            exit()
+            try:
+                avobot.destroy()
+                file.close()
+                sys.exit()
+                exit()
+            except:
+                pass
     fade()
 def getWeatherText():
     insertText("Please wait, I'm checking the weather for %s" %(inputBox.get()), "instant")
@@ -196,12 +200,13 @@ def insertCharacter(text, speed):
     else:
         speed = "instant"
     if speed == "normal":
-        textArray = []
         for character in text:
-            textArray.append(character)
-        for character in textArray:
-            outputBox.insert(tkinter.END, character)
-            time.sleep(0.01)
+            if character == "`":
+                outputBox.insert(tkinter.END, "\n")
+                time.sleep(0.001)
+            else:
+                outputBox.insert(tkinter.END, character)
+                time.sleep(0.01)
     else:
         outputBox.insert(tkinter.END, text)
 def insertText(text, speed=None):
@@ -351,6 +356,8 @@ def evaluateInput(userInput):
                                 insertText("What do you want to search?")
                                 inputBox.bind("<Return>", (lambda event:searchWeb()))
                                 evaluateButton['command'] = lambda:searchWeb()
+                        elif output == "My version is":
+                            insertText("My version is {}".format(version))
                         else:
                             insertText(output)
                         break
@@ -364,7 +371,7 @@ avobot = tkinter.Tk()
 hideThread = threading.Thread(target=avobot.attributes("-alpha", 0))
 hideThread.start()
 avobot.protocol("WM_DELETE_WINDOW", createExitThread)
-avobot.title("Avobot (Beta 0.06)")
+avobot.title("Avobot".format(version))
 avobot.resizable(False, False)
 inputLabel = Label(avobot, text = "Input")
 inputLabel.grid(row = 0, column = 0, sticky=N+W, ipadx=5, ipady=5, padx=5, pady=5)
@@ -382,7 +389,7 @@ try:
     dataFile.close()
     insertText("Hello " + userName + "! How can I help you today?", "instant")
 except:
-    insertText("Please tell me your name")
+    insertText("Hello! Can you please tell me your name?")
     inputBox.bind("<Return>", (lambda event:writeName(inputBox.get())))
     evaluateButton['command'] = lambda:writeName(inputBox.get())
 def fadeOpen():
