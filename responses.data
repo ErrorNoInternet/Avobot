@@ -1,5 +1,7 @@
 q#say:
 Say-
+q#why:web:search:broke
+Ok, here's a full explanation: Before, Avobot uses the Microsoft search API to search for results. But the API key is not free and expires after 7 days. So, after 7 days, here we are. For some reason, the requests module doesn't get all the results from the Bing website. It doesn't work well with spaces and has a ton of more bugs. I really need help, so please help on GitHub if you can. Thanks!
 q#search
 Searching web
 q#open:/
@@ -81,8 +83,6 @@ q#you:know:cortana
 Yup, I know Cortana, she's the Windows Assistant right?
 q#you:know:bixby
 I know Bixby. She's Samsung's device assistant.
-q#so
-So what?|So...|Sososososososososososososososo
 q#found:better:than:you
 You found a chatbot better than me???! Please don't go!|WHAT? That's IMPOSSIBLE!|Please don't leave me, I can improve!
 q#how:you:made
@@ -281,4 +281,18 @@ q#what:you:built:on
 I was built on a Raspberry Pi 3B+ running Ubuntu MATE 18.04
 q#what:you:built:using
 I was built on a Raspberry Pi 3B+ running Ubuntu MATE 18.04
+q#you:dumb
+You hurt my feelings|Why??|:(
+q#i:fine
+Oh, ok
+q#i:sad
+What happend?|Can I help you?|Why?
+q#i:angry
+What Happend?|Why?
+q#cheer:me:up
+You can ask me to tell you a joke!
+q#laugh
+Hahahaha|LMFAO|HAHAHAAH
+q#so
+So what?|So...|Sososososososososososososososo
 #ENDFILE#

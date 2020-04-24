@@ -8,13 +8,15 @@ import datetime
 import requests
 import threading
 import subprocess
+import urllib.parse
 from tkinter import *
 from tkinter import ttk
 from threading import Thread
+from bs4 import BeautifulSoup
 from tkinter import messagebox
-from IPython.display import HTML
+from urllib.request import urlopen, Request
+from urllib.parse import urlencode, urlunparse
 weatherAPIKey = "a4aa5e3d83ffefaba8c00284de6ef7c3"
-bingSearchAPIKey = "537fecf13d894cbe8781e6c6a593dc61"
 emotionCounter = 0
 unknownResponse = ["I don't understand you", "What do you mean?", "I couldn't find an answer to that", "What did you say?", "Please say that in another way", "Couldn't find that in my database"]
 try:
@@ -27,64 +29,56 @@ def createExitThread():
     waitExitThread = threading.Thread(target=waitExitThread)
     waitExitThread.start()
 def searchWeb():
-    insertText("Searching the web for \"" + inputBox.get() + "\"")
+    insertText("Searching the web for \"" + inputBox.get() + "\"", "instant")
     searchThread = threading.Thread(target=getWebResult)
     searchThread.start()
 def getWebResult():
-    try:
-        subscriptionKey = bingSearchAPIKey
-        assert subscriptionKey
-        searchUrl = "https://api.cognitive.microsoft.com/bing/v7.0/search"
-        searchTerm = inputBox.get()
-        inputBox.delete(0, tkinter.END)
-        headers = {"Ocp-Apim-Subscription-Key": subscriptionKey}
-        params = {"q": searchTerm, "textDecorations": True, "textFormat": "HTML"}
-        response = requests.get(searchUrl, headers=headers, params=params)
-        response.raise_for_status()
-        searchResults = response.json()
-        rows = "\n".join(["""<tr>
-                           <td><a href=\"{0}\">{1}</a></td>
-                           <td>{2}</td>
-                         </tr>""".format(v["url"], v["name"], v["snippet"])
-                      for v in searchResults["webPages"]["value"]])
-        HTML("<table>{0}</table>".format(rows))
-        start_sep='<td>'
-        end_sep='</td>'
-        result=[]
-        tmp=rows.split(start_sep)
-        for par in tmp:
-          if end_sep in par:
-            result.append(par.split(end_sep)[0])
-        start_sep='<td>'
-        end_sep='</td>'
-        result=[]
-        tmp=rows.split(start_sep)
-        counter = 0
-        for par in tmp:
-          if end_sep in par:
-            if "href" in par.split(end_sep)[0]:
-                result.append(par.split(end_sep)[0])
-                counter = counter + 1
-                result.append("\n")
-            else:
-                result.append(par.split(end_sep)[0])
-                result.append("\n\n")
-        new = ""
-        for item in result:
-            new += item
-        new = new.replace("<a href=\"", "Link: ")
-        new = new.replace("\">", "\nTitle: ")
-        final = new.replace("</a>", "")
-        final = final.replace("<b>", "")
-        final = final.replace("</b>", "")
-        final = final.replace("&#39;", "")
-        final = final.replace("&quot;", "\"")
-        final = final.replace("&amp;", "and")
-        insertText("Found " + str(counter+1) + " results: \n\n" + final, "instant")
-        inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
-        evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
-    except Exception as error:
-        insertText("Couldn't get any results from the web\n"+str(error))
+    output = []
+    insertText("The web search feature is broken. There are some problems with Bing that causes the requests module to not get all the links. Please help on GitHub if you can.")
+    inputBox.delete(0, tkinter.END)
+##    try:
+##        query = inputBox.get()
+##        inputBox.delete(0, tkinter.END)
+##        url = "https://www.bing.com/search?" + urlencode({'q': query})
+##        custom_user_agent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0"
+##        printed = False
+##        def printResults():
+##            req = Request(url, headers={"User-Agent": custom_user_agent})
+##            page = urlopen(req)
+##            soup = BeautifulSoup(page.read(2147483646), features="html.parser")
+##            [s.extract() for s in soup('span')]
+##            unwantedTags = ['strong', 'cite']
+##            for tag in unwantedTags:
+##                for match in soup.findAll(tag):
+##                    match.replaceWithChildren()
+##            results = soup.findAll('li', { "class" : "b_algo" })
+##            for result in results:
+##                title = str(result.find('h2')).replace("<h2>", " ").replace("</h2>", "")
+##                link = re.split("\"", title)
+##                title = title.split("target=\"_blank\">")[1]
+##                title = title.replace("</a>", "")
+##                output.append("Title: " + title)
+##                output.append("Link: " + link[3])
+##                output.append(str(result.find('p')).replace("<p>", "").replace("</p>", ""))
+##                output.append("\n")
+##                global printed
+##                printed = True
+##        if printed == False:
+##            printResults()
+##        if printed == False:
+##            printResults()
+##        if printed == False:
+##            printResults()
+##        outputBox.delete('1.0', tkinter.END)
+##        for item in output:
+##            if item == "\n":
+##                outputBox.insert(tkinter.END, "\n")
+##            else:
+##                outputBox.insert(tkinter.END, item+"\n")
+##        if output == []:
+##            insertText("Please try again later")
+##    except Exception as error:
+##        insertText("I couldn't access the internet\n"+str(error))
 def openFile(filename):
     if sys.platform == "win32":
         os.startfile(filename)
@@ -116,7 +110,7 @@ def waitExitThread():
     insertText("Bye " + userName + "! [2]")
     time.sleep(1)
     insertText("Bye " + userName + "! [1]")
-    time.sleep(0.5)
+    time.sleep(0.8)
     def fade():
         alpha = avobot.attributes("-alpha")
         if alpha > 0.003:
@@ -130,14 +124,14 @@ def waitExitThread():
             exit()
     fade()
 def getWeatherText():
-    insertText("Please wait, I'm checking the weather for %s now" %(inputBox.get()))
+    insertText("Please wait, I'm checking the weather for %s" %(inputBox.get()), "instant")
     cityName = inputBox.get()
     inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
     evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
     checkWeatherThread = threading.Thread(target=checkWeather)
     checkWeatherThread.start()
 def checkWeather():
-    insertText("Please wait, I'm checking the weather for %s now" %(inputBox.get()))
+    insertText("Please wait, I'm checking the weather for %s" %(inputBox.get()), "instant")
     def format_response(weather):
         try:
             name = weather['name']
@@ -191,7 +185,7 @@ def writeName(name):
         inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
         evaluateButton['command'] = lambda:evaluateInput(inputBox.get())
         inputBox.delete(0, tkinter.END)
-        insertText("Nice to meet you " + userName + "! How can I help you today?")
+        insertText("Nice to meet you " + userName + "! How can I help you today?", "instant")
         with open("responses.data") as file:
             lines = [line.rstrip() for line in file]
     except:
@@ -348,7 +342,7 @@ def evaluateInput(userInput):
                                     searchTerm = searchString.split("search for ")[1]
                                     inputBox.delete(0, tkinter.END)
                                     inputBox.insert(0, searchTerm)
-                                    insertText("Searching the web for \"" + inputBox.get() + "\"")
+                                    insertText("Searching the web for \"" + inputBox.get() + "\"", "instant")
                                     searchThread = threading.Thread(target=getWebResult)
                                     searchThread.start()
                                 except:
@@ -370,13 +364,13 @@ avobot = tkinter.Tk()
 hideThread = threading.Thread(target=avobot.attributes("-alpha", 0))
 hideThread.start()
 avobot.protocol("WM_DELETE_WINDOW", createExitThread)
-avobot.title("Avobot (Beta 0.05)")
+avobot.title("Avobot (Beta 0.06)")
 avobot.resizable(False, False)
 inputLabel = Label(avobot, text = "Input")
 inputLabel.grid(row = 0, column = 0, sticky=N+W, ipadx=5, ipady=5, padx=5, pady=5)
 inputBox = ttk.Entry(avobot, width = 40)
 inputBox.grid(row = 0, column = 1)
-outputBox = Text(avobot, font=("calibri", 12), height=10, width=48)
+outputBox = Text(avobot, font=("calibri", 12), height=10, width=48, wrap=tkinter.WORD)
 evaluateButton = ttk.Button(avobot, text="Done", command = lambda:evaluateInput(inputBox.get()))
 inputBox.bind("<Return>", (lambda event:evaluateInput(inputBox.get())))
 evaluateButton.grid(row = 0, column = 2, padx=5, pady=7)
@@ -386,7 +380,7 @@ try:
        lines2 = [line2.rstrip() for line2 in dataFile]
     userName = lines2[0]
     dataFile.close()
-    insertText("Hello " + userName + "! How can I help you today?")
+    insertText("Hello " + userName + "! How can I help you today?", "instant")
 except:
     insertText("Please tell me your name")
     inputBox.bind("<Return>", (lambda event:writeName(inputBox.get())))
